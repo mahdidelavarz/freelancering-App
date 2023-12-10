@@ -1,0 +1,28 @@
+@import url('/fonts.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+@layer components{
+  .textField__input{
+    @apply w-full py-3 px-4 rounded-xl text-slate-800 border border-gray-100 hover:border-gray-300 focus:border-gray-300 outline-none duration-200 focus:shadow-lg focus:shadow-purple-200 
+  }
+  .btn {
+    @apply px-4 py-3 rounded-xl text-slate-50 font-bold transition-all duration-300
+  }
+  .btn__primary{
+    @apply bg-purple-700
+  }
+}
+body{
+  font-family: 'vazir';
+  background-color: aliceblue;
+}
+
+label{
+  display: block;
+}
