@@ -3,7 +3,7 @@ import React from "react";
 function TextField({phoneNumber , onChange , label , placeholder}) {
   return (
     <div>
-      <label className="text-lg py-4">{label}</label>
+      <label className="text-lg py-2 px-2">{label}</label>
       <input
         onChange={onChange}
         value={phoneNumber}

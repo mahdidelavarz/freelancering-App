@@ -1,14 +1,10 @@
-import React from "react";
-import SendOtpForm from "../features/authentication/SendOtpForm";
-import CheckOtpForm from "../features/authentication/CheckOtpForm";
+import React, { useState } from "react";
+import AuthContainer from "../features/authentication/AuthContainer";
 
 function AuthPage() {
   return (
-    <section className="w-full flex justify-center pt-20">
-      <div className="w-full sm:max-w-sm md:max-w-md ">
-      <SendOtpForm />
-      {/* <CheckOtpForm/> */}
-    </div>
+    <section className="w-full h-[100vh] flex justify-center pt-20">
+      <AuthContainer />
     </section>
   );
 }
