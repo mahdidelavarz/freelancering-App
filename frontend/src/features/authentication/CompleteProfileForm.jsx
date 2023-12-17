@@ -21,11 +21,14 @@ function CompleteProfileForm() {
     try {
       const {message , user} = await mutateAsync({ name, email, role });
       toast.success(message);
-      if(user.status === 1){
-       return navigate('/')
-      }else{
-        navigate('/profile')
+      
+      if(user.status !== 2){
+       navigate('/');
+       toast.success('wait for prove your information')
+       return
       }
+      if(user.role === "OWNER") return navigate("/owner");
+      if(user.role === "FREELANCER") return navigate("/freelancer");;
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
