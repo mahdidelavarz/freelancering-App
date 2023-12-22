@@ -8,6 +8,5 @@ export default function useOwnerProjects() {
   });
 
   const { projects } = data || {};
-  console.log(data)
   return { isLoading, projects };
 }
