@@ -22,7 +22,7 @@ function TableRow({ project, index }) {
       <td>{toLocalDate(project.deadline)}</td>
       <td>
         <div className="flex flex-wrap items-center gap-2 max-w-[200px]">
-          {project.tag?.map((tag) => (
+          {project.tags?.map((tag) => (
             <span key={tag} className="badge badge__secondary">
               {tag}
             </span>
@@ -31,7 +31,7 @@ function TableRow({ project, index }) {
       </td>
       <td>{project.freelancer?.name || "-"}</td>
       <td>
-        {project.status === "open" ? (
+        {project.status === "OPEN" ? (
           <span className="badge badge__success">باز</span>
         ) : (
           <span className="badge badge__danger">بسته</span>

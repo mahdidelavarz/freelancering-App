@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import TextField from "../../ui/TextField";
 import Loading from "../../ui/Loading";
-function SendOtpForm({ phoneNumber, handleSendOtp, onChange , isPending }) {
+import { useForm } from "react-hook-form";
+function SendOtpForm({ register, handleSendOtp, isPending }) {
   return (
     <div>
-      <form className="space-y-10" onSubmit={handleSendOtp}>
+      <form className="space-y-10">        
         <TextField
-          phoneNumber={phoneNumber}
-          onChange={onChange}
+        register={register}
           label={"شماره موبایل"}
           placeholder={"*********09"}
           name="phoneNumber"

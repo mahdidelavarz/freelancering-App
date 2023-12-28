@@ -61,7 +61,7 @@ label{
     @apply bg-primary-900 text-white;
   }
   .badge__secondary {
-    @apply bg-gray-200 text-slate-600;
+    @apply bg-gray-300 text-slate-600;
   }
   .badge__success {
     @apply bg-green-500 text-white;

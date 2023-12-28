@@ -12,7 +12,7 @@ import FreeLancerPage from "./pages/FreeLancerPage";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import Projects from "./pages/Projects";
 import Project from "./pages/Project";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 function App() {
   const queryClient = new QueryClient();
   return (

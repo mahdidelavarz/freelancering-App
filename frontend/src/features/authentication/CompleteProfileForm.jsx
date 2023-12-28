@@ -5,55 +5,82 @@ import { useMutation } from "@tanstack/react-query";
 import { completeProfile } from "../../services/authService";
 import Loading from "../../ui/Loading";
 import { toast } from "react-hot-toast";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function CompleteProfileForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  const {
+    handleSubmit,
+    getValues,
+    register,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { role: "OWNER" },
+    mode: "onChange",
+  });
+  console.log(errors);
+  const currentRoleFormFieldId = "role";
+  const currentRoleDefault = getValues(currentRoleFormFieldId);
   const navigate = useNavigate();
-  console.log(name, email, role);
   const { mutateAsync, isPending, data } = useMutation({
     mutationFn: completeProfile,
   });
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleCompleteForm = async (data) => {
     try {
-      const {message , user} = await mutateAsync({ name, email, role });
+      const { message, user } = await mutateAsync(data);
       toast.success(message);
-      
-      if(user.status !== 2){
-       navigate('/');
-       toast.success('wait for prove your information')
-       return
+
+      if (user.status !== 2) {
+        navigate("/");
+        toast.success("wait for prove your information");
+        return;
       }
-      if(user.role === "OWNER") return navigate("/owner");
-      if(user.role === "FREELANCER") return navigate("/freelancer");;
+      if (user.role === "OWNER") return navigate("/owner");
+      if (user.role === "FREELANCER") return navigate("/freelancer");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
   };
   return (
     <div className="w-full max-w-lg">
-      <form className="w-full space-y-8" onSubmit={handleSubmit}>
+      <form
+        className="w-full space-y-8"
+        onSubmit={handleSubmit(handleCompleteForm)}
+      >
         <TextField
           label="نام و نام خانوادگی"
+          register={register}
           name="name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          required
+          validationSchema={{
+            required: "نام و نام خانوادگی ضروری است",
+          }}
+          errors={errors}
         />
         <TextField
           label="ایمیل"
+          register={register}
           name="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          required
+          validationSchema={{
+            required: "ایمیل ضروری است",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "ایمیل نامعتبر است"
+            }
+          }}
+          errors={errors}
         />
-        <RadioGroup label="نوع فعالیت خود را انتخاب کنید :" color="secondary">
+        <RadioGroup
+          label="نوع فعالیت خود را انتخاب کنید :"
+          defaultValue={currentRoleDefault}
+          name="role"
+        >
           <div className="w-full h-20 flex justify-start items-center gap-4">
-            <Radio value="FREELANCER" onClick={() => setRole('FREELANCER')}>
+            <Radio value={"FREELANCER"} {...register(currentRoleFormFieldId)}>
               <span className="mx-2">فریلنسر</span>
             </Radio>
-            <Radio value="OWNER" onClick={() => setRole('OWNER')}>
+            <Radio value={"OWNER"} {...register(currentRoleFormFieldId)}>
               <span className="mx-2">کارفرما</span>
             </Radio>
           </div>

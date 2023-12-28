@@ -4,23 +4,25 @@ import SendOtpForm from "./SendOtpForm";
 import { useMutation } from "@tanstack/react-query";
 import { getOtp } from "../../services/authService";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 const AuthContainer = () => {
   // ! -----------------------------------------------------------states
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const { register, handleSubmit, getValues } = useForm();
   const [step, setStep] = useState(1);
 
-  const { isPending, error, data:otpResponse, mutateAsync } = useMutation({
+  const {
+    isPending,
+    error,
+    data: otpResponse,
+    mutateAsync,
+  } = useMutation({
     mutationFn: getOtp,
   });
   // ! -----------------------------------------------------------handlers
-  const onChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
-  const handleSendOtp = async (e) => {
-    e.preventDefault();
+  const handleSendOtp = async (data) => {
     try {
-      const data = await mutateAsync({ phoneNumber });
-      toast.success(data.message);
+      const { message } = await mutateAsync(data);
+      toast.success(message);
       setStep(2);
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -31,9 +33,8 @@ const AuthContainer = () => {
       case 1:
         return (
           <SendOtpForm
-            handleSendOtp={handleSendOtp}
-            phoneNumber={phoneNumber}
-            onChange={onChange}
+            register={register}
+            onChange={handleSubmit(handleSendOtp)}
             isPending={isPending}
           />
         );
@@ -41,8 +42,8 @@ const AuthContainer = () => {
       case 2:
         return (
           <CheckOtpForm
-            onResendOtp={handleSendOtp}
-            phoneNumber={phoneNumber}
+            onResendOtp={handleSubmit(handleSendOtp)}
+            phoneNumber={getValues("phoneNumber")}
             onBack={() => setStep((s) => s - 1)}
             otpResponse={otpResponse}
           />
