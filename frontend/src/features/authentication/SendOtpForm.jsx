@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import TextField from "../../ui/TextField";
 import Loading from "../../ui/Loading";
 import { useForm } from "react-hook-form";
-function SendOtpForm({ register, handleSendOtp, isPending }) {
+function SendOtpForm({ register, onSubmit, isPending }) {
   return (
     <div>
-      <form className="space-y-10">        
+      <form className="space-y-10" onSubmit={onSubmit``}>        
         <TextField
         register={register}
           label={"شماره موبایل"}

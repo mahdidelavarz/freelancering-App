@@ -34,7 +34,7 @@ const AuthContainer = () => {
         return (
           <SendOtpForm
             register={register}
-            onChange={handleSubmit(handleSendOtp)}
+            onSubmit={handleSubmit(handleSendOtp)}
             isPending={isPending}
           />
         );
