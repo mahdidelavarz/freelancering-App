@@ -8,7 +8,7 @@ function RHFSelect({ label, name, register, options, required }) {
         {required && <span className="text-rose-500">*</span>}
       </label>
       <select {...register(name)} id={name} className="textField__input">
-        {options.map((option) => (
+        {options?.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

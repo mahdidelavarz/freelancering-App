@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form";
 import RHFSelect from "../../ui/RHFSelect";
 import { TagsInput } from "react-tag-input-component";
 import DatePickerField from "../../ui/DatePickerField";
-function CreateProjectForm() {
+import useCategories from "../../hooks/useCategories";
+import useCreateProject from "./useCreateProject";
+import Loading from "../../ui/Loading";
+function CreateProjectForm({ onClose }) {
   const {
     register,
     formState: { errors },
@@ -13,8 +16,20 @@ function CreateProjectForm() {
 
   const [tags, setTags] = useState([]);
   const [date, setDate] = useState(new Date());
+  const { categories } = useCategories();
+  const { isCreating, createProject } = useCreateProject();
   const onSubmit = (data) => {
-    console.log(data);
+    const newProject = {
+      ...data,
+      deadline: new Date(date).toISOString(),
+      tags,
+    };
+    createProject(newProject, {
+      onSuccess: () => {
+        onClose();
+        reset();
+      },
+    });
   };
 
   return (
@@ -27,7 +42,7 @@ function CreateProjectForm() {
         validationSchema={{
           required: "عنوان ضروری است",
           minLength: {
-            value: 20,
+            value: 10,
             message: "طول عنوان باید بیش از 10 کاراکتر باشد",
           },
         }}
@@ -41,7 +56,7 @@ function CreateProjectForm() {
         validationSchema={{
           required: "توضیحات ضروری است",
           minLength: {
-            value: 20,
+            value: 10,
             message: "طول توضیحات باید بیش از 10 کاراکتر باشد",
           },
         }}
@@ -49,7 +64,8 @@ function CreateProjectForm() {
       />
       <TextField
         label="بودجه"
-        name="bujet"
+        name="budget"
+        type="number"
         register={register}
         required
         validationSchema={{
@@ -66,17 +82,27 @@ function CreateProjectForm() {
           label="دسته بندی"
           name="category"
           register={register}
-          options={[]}
+          options={categories}
         />
       </div>
       <div>
         <label className="mb-2 block text-slate-700">تگ ها</label>
         <TagsInput value={tags} onChange={setTags} name="tags" />
       </div>
-      <DatePickerField date={date} setDate={setDate} label="تاریخ اعتبار پروژه"/>
-      <button type="submit" className="btn btn__primary w-full mt-10">
-        تایید
-      </button>
+      <DatePickerField
+        date={date}
+        setDate={setDate}
+        label="تاریخ اعتبار پروژه"
+      />
+      <div>
+        {isCreating ? (
+          <Loading />
+        ) : (
+          <button type="submit" className="btn btn__primary w-full mt-10">
+            تایید
+          </button>
+        )}
+      </div>
     </form>
   );
 }

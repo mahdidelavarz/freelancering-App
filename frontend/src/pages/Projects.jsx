@@ -16,13 +16,13 @@ function Projects() {
         >
           افزودن پروژه
         </button>
-          <Modal
-            open={isAddProjectOpen}
-            title="اضافه کردن پروژه جدید"
-            onClose={() => setIsAddProject(false)}
-          >
-            <CreateProjectForm />
-          </Modal>
+        <Modal
+          open={isAddProjectOpen}
+          title="اضافه کردن پروژه جدید"
+          onClose={() => setIsAddProject(false)}
+        >
+          <CreateProjectForm onClose={() => setIsAddProject(false)} />
+        </Modal>
       </div>
       <ProjectTable />
     </div>
