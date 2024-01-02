@@ -7,29 +7,59 @@ import DatePickerField from "../../ui/DatePickerField";
 import useCategories from "../../hooks/useCategories";
 import useCreateProject from "./useCreateProject";
 import Loading from "../../ui/Loading";
-function CreateProjectForm({ onClose }) {
+import useEditProject from "./useEditProject";
+function CreateProjectForm({ onClose, projectToEdit = {} }) {
+  const { _id: editId } = projectToEdit;
+  const isEditMode = Boolean(editId);
+  let editValues = {};
+
+  if (isEditMode) {
+    const { title, description, budget, category } = projectToEdit;
+    editValues = {
+      title,
+      description,
+      category: category._id,
+      budget,
+    };
+  }
+
+  const [tags, setTags] = useState(projectToEdit?.tags || []);
+  const [date, setDate] = useState(new Date(projectToEdit?.deadline || ""));
+  const { isCreating, createProject } = useCreateProject();
+  const { isEditing, editProject } = useEditProject();
   const {
     register,
+    reset,
     formState: { errors },
     handleSubmit,
-  } = useForm();
-
-  const [tags, setTags] = useState([]);
-  const [date, setDate] = useState(new Date());
+  } = useForm({ defaultValues: editValues });
   const { categories } = useCategories();
-  const { isCreating, createProject } = useCreateProject();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const newProject = {
       ...data,
       deadline: new Date(date).toISOString(),
       tags,
     };
-    createProject(newProject, {
-      onSuccess: () => {
-        onClose();
-        reset();
-      },
-    });
+
+    if (isEditMode) {
+      console.log(editId);
+      editProject(
+        { id: editId, newProject },
+        {
+          onSuccess: () => {
+            onClose();
+            reset();
+          },
+        }
+      );
+    } else {
+      createProject(newProject, {
+        onSuccess: () => {
+          onClose();
+          reset();
+        },
+      });
+    }
   };
 
   return (
@@ -42,7 +72,7 @@ function CreateProjectForm({ onClose }) {
         validationSchema={{
           required: "عنوان ضروری است",
           minLength: {
-            value: 10,
+            value: 5,
             message: "طول عنوان باید بیش از 10 کاراکتر باشد",
           },
         }}
@@ -56,7 +86,7 @@ function CreateProjectForm({ onClose }) {
         validationSchema={{
           required: "توضیحات ضروری است",
           minLength: {
-            value: 10,
+            value: 5,
             message: "طول توضیحات باید بیش از 10 کاراکتر باشد",
           },
         }}
@@ -71,7 +101,7 @@ function CreateProjectForm({ onClose }) {
         validationSchema={{
           required: "بودجه ضروری است",
           minLength: {
-            value: 10,
+            value: 5,
             message: "طول بودجه باید بیش از 10 کاراکتر باشد",
           },
         }}
@@ -95,7 +125,7 @@ function CreateProjectForm({ onClose }) {
         label="تاریخ اعتبار پروژه"
       />
       <div>
-        {isCreating ? (
+        {isCreating || isEditing ? (
           <Loading />
         ) : (
           <button type="submit" className="btn btn__primary w-full mt-10">

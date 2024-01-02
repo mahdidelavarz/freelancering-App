@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom"
 import Table from "./Table";
 import truncateText from "../utils/truncateText";
 import { toPersianNumbersWithComma } from "../utils/toPersianNumbers";
 import toLocalDate from "../utils/toLocalDate";
-import { HiOutlineTrash } from "react-icons/hi";
+import { HiEye, HiOutlineTrash } from "react-icons/hi";
 import { TbPencilMinus } from "react-icons/tb";
 import Modal from "./Modal";
 import ConfirmDelete from "./ConfirmDelete";
 import useRemoveProject from "../features/projects/useRemoveProject";
+import CreateProjectForm from "../features/projects/CreateProjectForm";
+import ToggleProjectStatus from "../features/projects/ToggleProjectStatus";
 
 function TableRow({ project, index }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -31,13 +34,9 @@ function TableRow({ project, index }) {
       </td>
       <td>{project.freelancer?.name || "-"}</td>
       <td>
-        {project.status === "OPEN" ? (
-          <span className="badge badge__success">باز</span>
-        ) : (
-          <span className="badge badge__danger">بسته</span>
-        )}
+        <ToggleProjectStatus project={project}/>
       </td>
-      <td className="flex gap-x-4">
+      <td className="flex gap-x-4 items-center mt-6">
         <button onClick={() => setIsEditOpen(true)}>
           <TbPencilMinus className="icon text-purple-900" />
         </button>
@@ -46,7 +45,10 @@ function TableRow({ project, index }) {
           title={`ویرایش ${project.title}`}
           onClose={() => setIsEditOpen(false)}
         >
-          this is modal ...
+          <CreateProjectForm
+            projectToEdit={project}
+            onClose={() => setIsEditOpen(false)}
+          />
         </Modal>
         <button onClick={() => setIsDeleteOpen(true)}>
           <HiOutlineTrash className="icon text-rose-500 " />
@@ -67,6 +69,11 @@ function TableRow({ project, index }) {
             disabled={false}
           />
         </Modal>
+      </td>
+      <td>
+       <Link to={project._id}>
+        <HiEye className="w-5 h-5 text-purple-800 "/>
+       </Link>
       </td>
     </Table.Row>
   );

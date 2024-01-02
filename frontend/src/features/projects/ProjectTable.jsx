@@ -8,7 +8,7 @@ import TableRow from "../../ui/TableRow";
 function ProjectTable() {
   const { isLoading, projects } = useOwnerProjects();
   if (isLoading) return <Loading />;
-  if (!projects.length) return <Empty resourceName="project" />;
+  if (!projects?.length) return <Empty resourceName="project" />;
   return (
     <Table>
       <Table.Header>
@@ -21,6 +21,7 @@ function ProjectTable() {
         <th>فریلنسر</th>
         <th>وضعیت</th>
         <th>عملیات</th>
+        <th>درخواست ها</th>
       </Table.Header>
       <Table.Body>
         {projects.map((project, index) => (

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 function SendOtpForm({ register, onSubmit, isPending }) {
   return (
     <div>
-      <form className="space-y-10" onSubmit={onSubmit``}>        
+      <form className="space-y-10" onSubmit={onSubmit}>        
         <TextField
         register={register}
           label={"شماره موبایل"}

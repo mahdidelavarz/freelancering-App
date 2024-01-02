@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import useProject from "../features/project/useProject";
+import Loading from "../ui/Loading";
+import ProjectHeader from "../features/project/ProjectHeader";
+import ProposalsTable from "../features/project/ProposalsTable";
 
 function Project() {
+  const { isLoading, project } = useProject();
+ console.log(project)
+  if (isLoading) return <Loading />;
   return (
-    <div>Project detail</div>
-  )
+    <div>
+      <ProjectHeader project={project} />
+      <ProposalsTable Proposals={project?.proposals} />
+    </div>
+  );
 }
 
-export default Project
+export default Project;
