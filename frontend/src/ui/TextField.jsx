@@ -11,7 +11,7 @@ function TextField({
   errors
 }) {
   return (
-    <div className="w-full flex flex-col items-start mt-8">
+    <div className="w-full flex flex-col items-start mt-8 dark:bg-gray-900">
       <label className="text-lg py-2 px-2">
         {label} {required && <span className="text-rose-500">*</span>}
       </label>

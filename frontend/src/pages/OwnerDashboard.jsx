@@ -2,7 +2,7 @@ import React from 'react'
 
 function OwnerDashboard() {
   return (
-    <div>OwnerDashboard</div>
+    <div className='dark:bg-gray-900'>OwnerDashboard</div>
   )
 }
 

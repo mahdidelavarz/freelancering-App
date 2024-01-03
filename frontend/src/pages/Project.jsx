@@ -9,7 +9,7 @@ function Project() {
  console.log(project)
   if (isLoading) return <Loading />;
   return (
-    <div>
+    <div className="dark:bg-gray-900">
       <ProjectHeader project={project} />
       <ProposalsTable Proposals={project?.proposals} />
     </div>

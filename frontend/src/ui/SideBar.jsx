@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function SideBar() {
   return (
-    <div className="col-span-3  row-span-5  p-4">
+    <div className="col-span-3  row-span-5  p-4 dark:bg-gray-900">
       <ul className="w-full flex flex-col gap-4 ">
         <NavLink
           className={({ isActive }) =>

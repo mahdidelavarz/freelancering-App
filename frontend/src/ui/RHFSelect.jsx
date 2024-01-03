@@ -2,7 +2,7 @@ import React from "react";
 
 function RHFSelect({ label, name, register, options, required }) {
   return (
-    <div className="my-8">
+    <div className="my-8 dark:bg-gray-900">
       <label htmlFor={name} className="block mb-2 text-gray-700">
         {label}
         {required && <span className="text-rose-500">*</span>}

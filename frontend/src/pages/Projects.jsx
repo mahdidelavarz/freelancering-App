@@ -7,7 +7,7 @@ import CreateProjectForm from "../features/projects/CreateProjectForm";
 function Projects() {
   const [isAddProjectOpen, setIsAddProject] = useState(false);
   return (
-    <div>
+    <div className="dark:bg-gray-900">
       <div className="w-full h-24 px-20 mb-4 flex justify-between items-center border-b">
         <h4 className="text-2xl">پروژه های شما</h4>
         <button

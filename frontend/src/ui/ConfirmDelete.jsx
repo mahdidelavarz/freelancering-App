@@ -2,7 +2,7 @@ import React from "react";
 
 function ConfirmDelete({ resourceName, onConfirm , disabled , onClose}) {
   return (
-    <div>
+    <div className="dark:bg-gray-900">
       <h2 className="font-bold text-base mb-8">
         آیا از حذف {resourceName} مطمئن هستید؟
       </h2>
