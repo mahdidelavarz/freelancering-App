@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import Dashboard from "../features/owner/Dashboard";
 
 function OwnerDashboard() {
-  return (
-    <div className='dark:bg-gray-900'>OwnerDashboard</div>
-  )
+  return <Dashboard />;
 }
 
-export default OwnerDashboard
+export default OwnerDashboard;
