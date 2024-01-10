@@ -10,7 +10,7 @@ function Dashboard() {
   return (
     <div>
       <DashboardHeader />
-      <Stats projects={proposals} />
+      <Stats proposals={proposals} />
     </div>
   );
 }
