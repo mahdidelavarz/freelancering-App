@@ -78,9 +78,8 @@ class ProposalController extends Controller {
     return proposal;
   }
   async changeProposalStatus(req, res) {
-    const ownerId = req.user._id;
     const { id } = req.params;
-    let { status } = req.body;
+    let { status, projectId } = req.body;
     status = Number(status);
     const proposal = await ProposalModel.findOneAndUpdate(
       { _id: id },
@@ -90,7 +89,7 @@ class ProposalController extends Controller {
     let freelancer = copyObject(proposal).user;
     if (status !== 2) freelancer = null;
 
-    await ProjectModel.updateOne({ owner: ownerId }, { $set: { freelancer } });
+    await ProjectModel.updateOne({ _id: projectId }, { $set: { freelancer } });
 
     if (!proposal)
       throw createHttpError.InternalServerError(" وضعیت پروپوزال آپدیت نشد");

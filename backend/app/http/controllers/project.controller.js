@@ -38,21 +38,21 @@ class ProjectController extends Controller {
   async getListOfProjects(req, res) {
     let dbQuery = {};
     const { search, category, sort, status } = req.query;
-    
+
     // SEARCH
     if (search) dbQuery["$text"] = { $search: search };
 
     // STATUS
-    if (status) {
+    if (["OPEN", "CLOSED"].includes(status)) {
       dbQuery["status"] = { $eq: status };
     }
     // CATEGORY
-    if (category) {
+    if (category && !category.includes("ALL")) {
       const categories = category.split(",");
       const categoryIds = [];
       for (const item of categories) {
-        const { _id } = await CategoryModel.findOne({ englishTitle: item });
-        categoryIds.push(_id);
+        const category = await CategoryModel.findOne({ englishTitle: item });
+        if (category) categoryIds.push(category._id);
       }
       dbQuery["category"] = {
         $in: categoryIds,

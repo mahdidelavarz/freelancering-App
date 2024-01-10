@@ -3,13 +3,12 @@ import truncateText from "../../../utils/truncateText";
 import { toPersianNumbersWithComma } from "../../../utils/toPersianNumbers";
 import toLocalDate from "../../../utils/toLocalDate";
 import Table from "../../../ui/Table";
-// import { MdAssignmentAdd } from "react-icons/md";
 import Modal from "../../../ui/Modal";
 import CreateProposals from "../../proposals/CreateProposals";
 function ProjectRow({ project, index }) {
   const statusStyle = {
-    OPEN: { label: "رد شده", class: "bg-rose-500" },
-    CLOSED: { label: "تایید شده", class: "bg-green-500" },
+    OPEN: { label: "باز", class: "bg-green-500 px-4 text-slate-100" },
+    CLOSED: { label: "بسته", class: "bg-rose-500" },
   };
   const [open, setOpen] = useState(false);
   return (
