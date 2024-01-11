@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
 import { CiEdit } from "react-icons/ci";
 import Loading from "../../ui/Loading";
+import { SiFreelancer } from "react-icons/si";
+import { IoReturnDownBack } from "react-icons/io5";
 const RESEND_TIME = 90;
 const CheckOtpForm = ({
   phoneNumber,
@@ -42,8 +44,12 @@ const CheckOtpForm = ({
     };
   }, [time]);
   return (
-    <div>
-      <div className="w-full flex gap-x-3 justify-start items-center pb-8">
+    <div className="max-w-lg">
+      <div className="w-full flex flex-col items-center text-purple-800">
+        <SiFreelancer className="text-6xl" />
+        <span className="text-lg">ورود به فریلنسر</span>
+      </div>
+      <div className="w-full flex gap-x-3 justify-start items-center h-20 text-purple-900 mt-2 ">
         <span>{otpResponse?.message}</span>
         <button
           className="text-2xl text-slate-500 hover:text-slate-800 duration-200"
@@ -52,23 +58,10 @@ const CheckOtpForm = ({
           <CiEdit />
         </button>
       </div>
-      <div className="mt-4 w-full flex flex-row-reverse justify-between px-4">
-        {time > 0 ? (
-          <p className="btn bg-gray-300">{time} تا ارسال مجدد کد</p>
-        ) : (
-          <button className="btn bg-gray-400" onClick={onResendOtp}>
-            دریافت مجدد کد تایید
-          </button>
-        )}
-        <button
-          onClick={onBack}
-          className="w-9 h-9 bg-gray-400 flex justify-center items-center rounded-lg"
-        >
-          <HiArrowRight className="w-6 h-6 text-slate-50" />
-        </button>
-      </div>
-      <form onSubmit={handleCheckOtp}>
-        <p className="font-bold text-slate-700 p-5">کد تایید را وارد کنید</p>
+      <form className=" flex flex-col gap-6" onSubmit={handleCheckOtp}>
+        <p className="font-bold tex-xl text-purple-800 p-5">
+          کد تایید را وارد کنید
+        </p>
         <OtpInput
           value={otp}
           onChange={setOtp}
@@ -91,6 +84,26 @@ const CheckOtpForm = ({
             تایید
           </button>
         )}
+        <div className="mt-4 w-full flex flex-row-reverse justify-between px-4 ">
+          {time > 0 ? (
+            <p className=" bg-purple-50 text-slate-500 py-2 px-4 rounded-md border border-purple-500">
+              {time} تا ارسال مجدد کد
+            </p>
+          ) : (
+            <button
+              className=" bg-white text-slate-800 py-2 px-4 rounded-md border border-purple-500 "
+              onClick={onResendOtp}
+            >
+              دریافت مجدد کد تایید
+            </button>
+          )}
+          <button
+            onClick={onBack}
+            className="px-3 bg-white flex justify-center items-center rounded-lg text-slate-700"
+          >
+            <IoReturnDownBack className="text-4xl text-purple-700"/>
+          </button>
+        </div>
       </form>
     </div>
   );

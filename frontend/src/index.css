@@ -37,7 +37,7 @@ label{
 
 @layer components {
   .textField__input {
-    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-secondary-200;
+    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-md focus:shadow-purple-300 dark:focus:shadow-secondary-200;
   }
   .btn {
     @apply px-3 py-1 font-bold rounded-xl transition-all duration-300;
@@ -111,12 +111,11 @@ button:disabled {
   box-shadow: none;
 }
 
-/* inupt number */
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
   -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  margin: 0; 
 }
 
 input[type="number"] {

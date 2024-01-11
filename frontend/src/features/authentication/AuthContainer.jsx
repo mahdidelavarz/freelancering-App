@@ -52,7 +52,9 @@ const AuthContainer = () => {
         return null;
     }
   };
-  return <div className="w-full sm:max-w-sm md:max-w-md ">{renderStep()}</div>;
+  return (
+    <div className="w-full h-[90%] flex justify-center">{renderStep()}</div>
+  );
 };
 
 export default AuthContainer;
